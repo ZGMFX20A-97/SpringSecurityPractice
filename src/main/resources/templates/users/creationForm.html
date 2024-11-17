@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::title}, ~{::body})}">
+<head>
+    <title>ユーザー作成 | 課題管理アプリケーション</title>
+</head>
+<body>
+<h1 class="mt-3">ユーザー作成</h1>
+<a href="../index.html" th:href="@{/}">トップページ</a>
+<form th:action="@{/users}" method="post" th:object="${userForm}">
+    <div class="mt-3">
+        <label for="usernameInput" class="form-label">ユーザー名</label>
+        <input type="text" id="usernameInput" class="form-control" th:field="*{username}"
+        th:classappend="${#fields.hasErrors('username')} ? is-invalid"/>
+        <p class="invalid-feedback" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">(errors)</p>
+    </div>
+    <div class="mt-3">
+        <label for="passwordInput" class="form-label">パスワード</label>
+        <input type="password" id="passwordInput" class="form-control" th:field="*{password}"
+               th:classappend="${#fields.hasErrors('password')} ? is-invalid"/>
+        <p class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">(errors)</p>
+    </div>
+    <div class="mt-3">
+        <label class="form-label" for="authorityRadio">権限</label>
+        <div id="authorityRadio">
+
+            <div class="form-check" th:classappend="${#fields.hasErrors('authority')} ? is-invalid">
+
+                <input class="form-check-input" type="radio" id="authorityAdminRadio" th:field="authority" value="ADMIN"
+                th:classappend="${#fields.hasErrors('authority')} ? is-invalid"/>
+                <label class="form-check-label" for="authorityAdminRadio"></label>
+
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" type="radio" id="authorityUserRadio" th:field="authority" value="USER"
+                       th:classappend="${#fields.hasErrors('authority')} ? is-invalid"/>
+
+                <label class="form-check-label" for="authorityUserRadio"></label>
+
+                <p class="invalid-feedback" th:if="${#fields.hasErrors('authority')}"
+                   th:errors="*{authority}">(errors)</p>
+            </div>
+        </div>
+    </div>
+    <div class="mt-3">
+        <button type="submit" class="btn btn-primary">作成</button>
+    </div>
+
+</form>
+
+</body>
+</html>
